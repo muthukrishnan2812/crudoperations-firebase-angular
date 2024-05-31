@@ -9,7 +9,7 @@ export const routes: Routes = [
     },
     {
         path:'',
-        component:HomeComponent,pathMatch:'full'
+        component:FormControlComponent,pathMatch:'full'
     },
     {
         path:'form',

@@ -41,6 +41,9 @@ export class FormControlComponent implements OnInit {
       this.posts = res
       console.log(this.posts);
     })
+    this.service.getApp().subscribe((res:any)=>{
+      console.log(res);
+    })
   }
   async onSave() {
     if (this.myForm.valid) {

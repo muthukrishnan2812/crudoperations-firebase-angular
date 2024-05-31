@@ -1,9 +1,11 @@
 import { Injectable } from '@angular/core';
-import { Firestore, addDoc, collection, collectionData, deleteDoc, doc, docSnapshots, getDoc, orderBy, query, setDoc, updateDoc } from '@angular/fire/firestore';
+import { Firestore, addDoc, collection, collectionData, collectionGroup, deleteDoc, doc, docSnapshots, getDoc, getDocs, orderBy, query, setDoc, updateDoc, where } from '@angular/fire/firestore';
 import { log } from 'console';
 import { Observable } from 'rxjs';
 import { Storage, getDownloadURL, getStorage, ref, uploadBytesResumable } from '@angular/fire/storage';
 import { url } from 'inspector';
+import { JsonPipe } from '@angular/common';
+import { json } from 'stream/consumers';
 
 @Injectable({
   providedIn: 'root'
@@ -80,5 +82,11 @@ export class DataService {
         }
       })
     })
+  }
+  getApp() {
+    const itemCollection = collection(this.fire, 'post');
+    console.log(itemCollection);
+    const posts = query(itemCollection, where("name", "in", ["Bala Esakki", "MuthuKrishnan", "Ram Babu", "abcd"]), where("age", "==", '26'))
+    return collectionData(posts);
   }
 }
