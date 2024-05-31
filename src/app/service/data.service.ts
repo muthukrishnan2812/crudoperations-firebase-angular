@@ -1,56 +1,84 @@
 import { Injectable } from '@angular/core';
-import { Firestore, addDoc, collection, collectionData, deleteDoc, doc, orderBy, query, setDoc, updateDoc } from '@angular/fire/firestore';
+import { Firestore, addDoc, collection, collectionData, deleteDoc, doc, docSnapshots, getDoc, orderBy, query, setDoc, updateDoc } from '@angular/fire/firestore';
 import { log } from 'console';
 import { Observable } from 'rxjs';
+import { Storage, getDownloadURL, getStorage, ref, uploadBytesResumable } from '@angular/fire/storage';
+import { url } from 'inspector';
 
 @Injectable({
   providedIn: 'root'
 })
 export class DataService {
-  name:string=''
-  age:number=0
-  phoneNumber:string=''
+  name: string = ''
+  age: number = 0
+  phoneNumber: string = ''
+  imageUrl: string[] = []
 
-  constructor(private fire:Firestore) { }
+  constructor(private fire: Firestore, private storage: Storage) { }
 
-  getData(){
-    const itemCollection = collection(this.fire,'post')
-    const itemQuery = query(itemCollection,orderBy('age','asc'))
-    return collectionData(itemQuery,{idField:'id'})
+  getData() {
+    const itemCollection = collection(this.fire, 'post')
+    const itemQuery = query(itemCollection, orderBy('age', 'asc'))
+    return collectionData(itemQuery, { idField: 'id' })
   }
 
-  addUser(user:{name:string,age:number,phoneNumber:string}){
-    const userData = collection(this.fire,'post')
+  async addUser(user: { name: string, age: number, phoneNumber: string, imageUrl: string[] }) {
+    const userData = collection(this.fire, 'post')
     //addDoc -> adding new data in firebase
-    return addDoc(userData,user)
+    await addDoc(userData, user)
+  }
+  //set user overwrite the existing document..
+
+  async setUser(postId: string) {
+    const userData = doc(this.fire, 'post', postId)
+    const user = {
+      name: 'balakrishna',
+      age: 43,
+      phoneNumber: "8946021225",
+      imageUrl: ["https://firebasestorage.googleapis.com/v0/b/post-e4123.appspot.com/o/post%2Fprofile.png?alt=media&token=71af6874-cac4-4d2c-ae21-a025b0dba799"]
+    }
+    try {
+      await setDoc(userData, user)
+    }
+    catch (error) {
+      console.error('set user as error', error);
+    }
   }
 
-  async setUser(postId:string){
-    const userData = doc(this.fire,'post',postId)
-    const user ={
-      name:'balakrishna',
-      age:43,
-      phoneNumber:"8946021225"
-    }
-    try{
-      await setDoc(userData,user)
-    }
-    catch(error){
-      console.error('set user as error',error);
-    }
-  }
-
-  async DeleteUser(postId:string){
-    const userData = doc(this.fire,'post',postId);
+  async DeleteUser(postId: string) {
+    const userData = doc(this.fire, 'post', postId);
     await deleteDoc(userData)
   }
-  
-  async UpdataUser(postId:any){
-    const userData =doc(this.fire,'post',postId);
-    await updateDoc(userData,{
-      name:this.name,
-      age:this.age,
-      phoneNumber:this.phoneNumber
+
+  async UpdataUser(postId: any, user: { name: string, age: number, phoneNumber: string, imageUrl: string[] }) {
+    const userData = doc(this.fire, 'post', postId);
+    await updateDoc(userData, user)
+  }
+  async imageUpload(event: any) {
+    const file = event.target.files[0];
+    if (file) {
+      console.log(file);
+      // const storage = getStorage()
+      const path = `post/${file.name}`
+      const storageReference = ref(this.storage, path)
+      const uploadTask = uploadBytesResumable(storageReference, file)
+      await uploadTask
+      const DownloadUrl = await getDownloadURL(uploadTask.snapshot.ref)
+      console.log(DownloadUrl);
+      return [DownloadUrl]
+    }
+    return [];
+  }
+  getUser(postId: any) {
+    //doc -> path reference for firebase database
+    const userData = doc(this.fire, 'post', postId);
+    return new Observable(observer => {
+      //getDoc -> returns the doc data
+      getDoc(userData).then(docSnapshots => {
+        if (docSnapshots.exists()) {
+          observer.next(docSnapshots.data())
+        }
+      })
     })
   }
 }

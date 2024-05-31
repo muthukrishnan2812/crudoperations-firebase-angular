@@ -1,12 +1,12 @@
 <div class="background">
     <div class="form">
-        <form action="" (submit)="onSave()">
+        <form action="" (submit)="onSave()" [formGroup]="myForm">
             <label for="">Name</label>
-            <input type="text" class="form-control" name="Name" [(ngModel)]="name">
+            <input type="text" class="form-control" name="Name" formControlName="name">
             <label for="">Age</label>
-            <input type="text" class="form-control" name="Age" [(ngModel)]="age">
+            <input type="text" class="form-control" name="Age" formControlName="age">
             <label for="">PhoneNumber</label>
-            <input type="text" class="form-control" name="PhoneNumber"  [(ngModel)]="phoneNumber">
+            <input type="text" class="form-control" name="PhoneNumber"  formControlName="phoneNumber">
             <label for="">Image</label>
             <input type="file" class="form-control" id="fileInput" (change)="uploadImage($event)">
             <button class="btn btn-primary mx-5 my-3"> Submit</button>
@@ -32,10 +32,10 @@
                 <td>{{post.age}}</td>
                 <td>{{post.phoneNumber}}</td>
                 <td><img src="{{post.imageUrl}}" alt=""></td>
-                <td><button class="btn btn-primary" (click)="deletePost(post.id)">DeletePost</button>
-                    <button class="btn btn-primary mx-3" (click)="onsetDoc(post.id)">setDoc</button>
+                <td><button class="btn btn-danger" (click)="deletePost(post.id)">DeletePost</button>
+                    <button class="btn btn-success mx-3" (click)="onsetDoc(post.id)">setDoc</button>
                     <button class="btn btn-primary" type="button" data-bs-toggle="modal"
-                        data-bs-target="#exampleModal">UpdateDoc</button>
+                        data-bs-target="#exampleModal" (click)="setUpdatePost(post.id)">UpdateDoc</button>
                 </td>
             </tr>
             }
@@ -52,20 +52,20 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form action="">
+                <form action="" [formGroup]="updateFrom">
                     <label for="name" class="form-label">Name</label>
-                    <input type="text" [(ngModel)]="updateName" name="updateName" class="form-control">
+                    <input type="text"  name="updateName" class="form-control" formControlName="name">
                     <label for="age" class="form-label">Age</label>
-                    <input type="text" [(ngModel)]="updateAge" name="updateAge" class="form-control">
+                    <input type="text"  name="updateAge" class="form-control" formControlName="age">
                     <label for="phoneNumber" class="form-label">phoneNumber</label>
-                    <input type="text" [(ngModel)]="updatePhoneNumber" name="updatePhoneNumber" class="form-control">
+                    <input type="text"  name="updatePhoneNumber" class="form-control" formControlName="phoneNumber">
                     <label for="uploadImage">Image</label>
                     <input type="file" name="imageUrl" (change)="uploadImage($event)" class="form-control">
                 </form>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary" (click)="updatePost(post.id)">Save
+                <button type="button" class="btn btn-primary" (click)="updatePost()" aria-label="Close" data-bs-dismiss="modal">Save
                     changes</button>
             </div>
         </div>
