@@ -41,35 +41,25 @@ export class HomeComponent implements OnInit, OnDestroy {
         age: this.age,
         phoneNumber: this.phoneNumber
       }
-      try {
-        await this.service.addUser(user)
-        console.log('user added successfully');
-        this.name = '',
-          this.age = null,
-          this.phoneNumber = ''
-      }
-      catch (error) {
-        console.error('Error adding User', error);
-      }
+      await this.service.addUser(user)
+      console.log('user added successfully');
+      this.name = '',
+        this.age = null,
+        this.phoneNumber = ''
     }
   }
   async defaultSave() {
-    try {
-      const user = {
-        name: 'MuthuKrishnan',
-        age: 25,
-        phoneNumber: '8946021225'
-      }
-      await this.service.addUser(user)
-      alert('user added successfully');
+    const user = {
+      name: 'MuthuKrishnan',
+      age: 25,
+      phoneNumber: '8946021225'
     }
-    catch (error) {
-      console.error('defaultsave as some error', error);
-    }
+    await this.service.addUser(user);
+    alert('user added successfully');
   }
 
   onsetDoc(postId: any) {
-    this.service.setUser(postId)
+    this.service.setUser(postId);
   }
   deletePost(postId: any) {
     this.service.DeleteUser(postId)
@@ -78,7 +68,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.service.name = this.updateName
     this.service.age = this.updateAge
     this.service.phoneNumber = this.updatePhoneNumber
-    this.service.UpdataUser(postId)
+    this.service.UpdataUser(postId);
     this.updateName = ''
     this.updateAge = 0
     this.updatePhoneNumber = ''
