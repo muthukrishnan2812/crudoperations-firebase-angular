@@ -101,5 +101,4 @@ export class FormControlComponent implements OnInit {
       console.log('post updated succesfully');
     }
   }
-
 }
