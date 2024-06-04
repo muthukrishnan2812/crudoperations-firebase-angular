@@ -1,5 +1,5 @@
 
-import { Component, Inject, NgModule, NgModuleRef, OnDestroy, OnInit, inject } from '@angular/core';
+import { ChangeDetectorRef, Component, Inject, NgModule, NgModuleRef, OnDestroy, OnInit, inject } from '@angular/core';
 import { DataService } from '../service/data.service';
 import { CommonModule } from '@angular/common';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms'
@@ -7,6 +7,7 @@ import { DestroyRef } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { user } from '@angular/fire/auth';
 import { RouterModule } from '@angular/router';
+import { Observable, from, take } from 'rxjs';
 
 
 @Component({
@@ -16,14 +17,18 @@ import { RouterModule } from '@angular/router';
   templateUrl: './form-control.component.html',
   styleUrl: './form-control.component.scss'
 })
-export class FormControlComponent implements OnInit {
+export class FormControlComponent implements OnInit, OnDestroy {
   posts: any
   myForm: FormGroup
   updateFrom: FormGroup
   imageUrl: string[] = []
   isUpdateMode: boolean = false;
   postId: string | null = null;
-  constructor(private service: DataService, private router: RouterModule) {
+  command: string = ''
+  progress: any
+  changeDectector = inject(ChangeDetectorRef)
+  takeDestroy = inject(DestroyRef)
+  constructor(private service: DataService) {
     this.myForm = new FormGroup({
       name: new FormControl(''),
       age: new FormControl(''),
@@ -37,13 +42,47 @@ export class FormControlComponent implements OnInit {
     console.log(this.myForm);
   }
   ngOnInit(): void {
-    this.service.getData().subscribe((res: any) => {
-      this.posts = res
+    this.service.getData().pipe(takeUntilDestroyed(this.takeDestroy)).subscribe((res: any) => {
+      this.posts = res;
+      this.posts.filter((a: any) => { //getting data to filter age is less then 26....
+        if (a.age <= 26) {
+          const age = a.age
+          console.log(age);
+        }
+      })
       console.log(this.posts);
     })
-    this.service.getApp().subscribe((res:any)=>{
+
+    //getApp -> getting data using where condition.....
+    this.service.getApp().pipe(takeUntilDestroyed(this.takeDestroy)).subscribe((res: any) => {
       console.log(res);
     })
+
+    //getDoc -> getting single doc from postId
+    this.service.ReadData("HAnEjn8rdmmVBYxqvkI2");
+
+    //progressbar -> live update for image storing in cloud storage....
+    this.service.progress.subscribe((res: any) => {
+      console.log('value of behaviourSubject ->',res);
+      this.progress = res
+      this.changeDectector.detectChanges(); 
+    })
+   
+  }
+  ngOnDestroy(): void {
+    this.takeDestroy.onDestroy
+  }
+  //getChangeDection -> ngClass for live update change on progressbar
+  getChangeDection() {
+    if (this.progress < 25) {
+      return 'progress-bar-low';
+    }
+    else if (this.progress < 75) {
+      return 'progress-bar-medium'
+    }
+    else {
+      return 'progress-bar-high'
+    }
   }
   async onSave() {
     if (this.myForm.valid) {
@@ -54,6 +93,7 @@ export class FormControlComponent implements OnInit {
       console.log('user added successfully');
       this.myForm.reset();
       (document.getElementById('fileInput') as HTMLInputElement).value = '';
+      this.progress = '';
     }
   }
   defaultSave() {
@@ -93,12 +133,16 @@ export class FormControlComponent implements OnInit {
       this.imageUrl = post.imageUrl || []
     }
   }
-   updatePost(){
-    if(this.updateFrom.valid && this.postId){
+  updatePost() {
+    if (this.updateFrom.valid && this.postId) {
       const formData = this.updateFrom.value
-      formData.imageUrl=this.imageUrl
-      this.service.UpdataUser(this.postId,formData)
+      formData.imageUrl = this.imageUrl
+      this.service.UpdataUser(this.postId, formData)
       console.log('post updated succesfully');
     }
+  }
+  updatenewData(postId: any) {
+    this.service.command = this.command
+    this.service.updateDoc(postId)
   }
 }

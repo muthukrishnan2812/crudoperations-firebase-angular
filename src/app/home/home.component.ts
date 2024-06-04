@@ -5,11 +5,12 @@ import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms'
 import { DestroyRef } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { user } from '@angular/fire/auth';
+import { RouterOutlet } from '@angular/router';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CommonModule, FormsModule,ReactiveFormsModule],
+  imports: [CommonModule, FormsModule,ReactiveFormsModule,RouterOutlet],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss'
 })
@@ -32,9 +33,6 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.service.getData().pipe(takeUntilDestroyed(this.takeDestroy)).subscribe((res: any) => {
       this.posts = res
       console.log(this.posts);
-    })
-    this.service.getUser("6YRsb7kLa6Fn4Q1B0ewA").subscribe((res:any)=>{
-      console.log(res);
     })
   }
   ngOnDestroy(): void {

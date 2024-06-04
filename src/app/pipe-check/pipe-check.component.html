@@ -1,0 +1,10 @@
+<input type="text" [(ngModel)]="text">
+{{ text | input:'krishnan'}}
+@for (user of (users | filter:'age':'24'); track user.name) {
+    <div>{{user.name}}</div>
+    <div>{{user.age}}</div>
+    <div>{{user.Gender}}</div>
+}
+@empty {
+    <div>none of the value</div>
+}
