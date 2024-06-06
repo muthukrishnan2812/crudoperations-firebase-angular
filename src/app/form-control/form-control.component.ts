@@ -145,4 +145,14 @@ export class FormControlComponent implements OnInit, OnDestroy {
     this.service.command = this.command
     this.service.updateDoc(postId)
   }
+  canexit(){
+    if(this.myForm){
+      console.log(this.myForm);
+      
+      return confirm('Are You sure to close the form-component ')
+    }
+    else{
+      return true;
+    }
+  }
 }
