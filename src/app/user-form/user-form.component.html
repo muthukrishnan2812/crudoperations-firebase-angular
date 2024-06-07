@@ -1,0 +1,59 @@
+<h5 class="text-danger my-3">User-form component</h5>
+<div class="background">
+    <div class="form">
+        <form action="" (submit)="onSave()" [formGroup]="myForm">
+            <label for="">Name</label>
+            <input type="text" class="form-control" name="Name" formControlName="name">
+            <label for="">Age</label>
+            <input type="text" class="form-control" name="Age" formControlName="age">
+            <label for="">PhoneNumber</label>
+            <input type="text" class="form-control" name="PhoneNumber" formControlName="phoneNumber">
+            <label for="">Image</label>
+            <input type="file" class="form-control" id="fileInput" (change)="uploadImage($event)">
+            @if (progress) {
+            <div class="progress my-3">
+                <div class="progress-bar progress-bar-striped" role="progressbar" [ngClass]="getChangeDection()"
+                    aria-valuenow="progress" aria-valuemin="0" aria-valuemax="100">
+                    {{ progress }} % done
+                </div>
+            </div>
+            }
+
+            <button class="btn btn-primary mx-5 my-3"> Submit</button>
+        </form>
+
+        <!-- <button class="btn btn-primary mx-5" (click)="defaultSave()">defaultValue</button> -->
+    </div>
+    <table class="table my-3 table-striped table-bordered">
+        <thead>
+            <tr class="table-dark">
+                <th>S.Id</th>
+                <th>Name</th>
+                <th>Age</th>
+                <th>PhoneNumber</th>
+                <th>Image</th>
+                <!-- <th>Actions</th> -->
+            </tr>
+        </thead>
+        <tbody>
+            @for (post of posts; track post.id;let i =$index) {
+            <tr>
+                <td>{{i+1}}</td>
+                <td>{{post.name}}</td>
+                <td>{{post.age}}</td>
+                <td>{{post.phoneNumber}}</td>
+                <td><img src="{{post.imageUrl}}" alt=""></td>
+                <!-- <td><button class="btn btn-danger">DeletePost</button>
+                    <button class="btn btn-success mx-3">setDoc</button>
+                    <button class="btn btn-primary mx-3" type="button" data-bs-toggle="modal"
+                        data-bs-target="#exampleModal" >UpdateDoc</button>
+                    <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                        data-bs-target="#exampleModal-1">
+                        updateNewData
+                    </button>
+                </td> -->
+            </tr>
+            }
+        </tbody>
+    </table>
+</div>

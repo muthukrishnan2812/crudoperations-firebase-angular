@@ -10,8 +10,17 @@ import { AuthService } from '../service/auth.service';
   styleUrl: './nav-bar.component.scss'
 })
 export class NavBarComponent {
-  constructor(private auth: AuthService, private route: Router) { }
+  constructor(private auth: AuthService, private router: Router) { }
   logout() {
-    return this.auth.logout();
+    return this.auth.logout()
+    .then(() => {
+      localStorage.removeItem('token');
+      localStorage.removeItem('role');
+      this.router.navigate([''])
+    })
+    .catch(err => {
+      console.log('signout error');
+      alert(err.message)
+    })
   }
 }

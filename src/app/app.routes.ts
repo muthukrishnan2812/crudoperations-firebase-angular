@@ -7,6 +7,8 @@ import { authGuard } from './guard/auth.guard';
 import { NavBarComponent } from './nav-bar/nav-bar.component';
 import { LoginComponent } from './login/login.component';
 import { deactivateGuard } from './guard/deactivate.guard';
+import { matchGuard } from './guard/math.guard';
+import { UserFormComponent } from './user-form/user-form.component';
 
 export const routes: Routes = [
     {
@@ -21,13 +23,20 @@ export const routes: Routes = [
     },
     {
         path: '',
-        redirectTo: "login", pathMatch: "full"
+        redirectTo: "login", pathMatch: "full",
+        canMatch:[matchGuard]
     },
     {
         path: 'form',
         component: FormControlComponent,
         canActivate: [authGuard],
-        canDeactivate: [deactivateGuard]
+        canDeactivate: [deactivateGuard],
+        canMatch:[matchGuard]
+    },
+    {
+        path:'user',
+        component:UserFormComponent,
+        canMatch:[matchGuard]
     },
     {
         path: 'pipe',

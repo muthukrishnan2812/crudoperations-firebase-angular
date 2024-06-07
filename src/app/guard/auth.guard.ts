@@ -1,5 +1,5 @@
 import { PLATFORM_ID, inject } from '@angular/core';
-import { CanActivateFn, Router } from '@angular/router';
+import { CanActivateFn, Route, Router } from '@angular/router';
 import { AuthService } from '../service/auth.service';
 import { promises } from 'dns';
 import { canActivate } from '@angular/fire/auth-guard';

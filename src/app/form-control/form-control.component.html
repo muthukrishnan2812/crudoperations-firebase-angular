@@ -1,3 +1,4 @@
+<h5 class="text-danger my-3 mx-auto">Admin component</h5>
 <div class="background">
     <div class="form">
         <form action="" (submit)="onSave()" [formGroup]="myForm">
@@ -11,13 +12,12 @@
             <input type="file" class="form-control" id="fileInput" (change)="uploadImage($event)">
             @if (progress) {
             <div class="progress my-3">
-                <div class="progress-bar progress-bar-striped" role="progressbar" [ngClass]="getChangeDection()" aria-valuenow="progress"
-                    aria-valuemin="0" aria-valuemax="100">
+                <div class="progress-bar progress-bar-striped" role="progressbar" [ngClass]="getChangeDection()"
+                    aria-valuenow="progress" aria-valuemin="0" aria-valuemax="100">
                     {{ progress }} % done
                 </div>
             </div>
             }
-
 
             <button class="btn btn-primary mx-5 my-3"> Submit</button>
         </form>
