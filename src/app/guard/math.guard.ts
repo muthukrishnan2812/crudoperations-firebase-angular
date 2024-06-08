@@ -11,7 +11,7 @@ export const matchGuard: CanMatchFn = (route, segments) => {
   if (isPlatformBrowser(platformId)) {
     const role = localStorage.getItem('role');
     const token = localStorage.getItem('token')
-    if (token && role == 'Admin' || role =='User') {
+    if (token && role == 'Admin' || role == 'User') {
       return true;
     }
     else {

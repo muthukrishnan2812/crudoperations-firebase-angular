@@ -78,10 +78,10 @@ export class FormControlComponent implements OnInit, OnDestroy {
       return 'progress-bar-low';
     }
     else if (this.progress < 75) {
-      return 'progress-bar-medium'
+      return 'progress-bar-medium';
     }
     else {
-      return 'progress-bar-high'
+      return 'progress-bar-high';
     }
   }
   async onSave() {
@@ -108,7 +108,7 @@ export class FormControlComponent implements OnInit, OnDestroy {
     try {
       const image = await this.service.imageUpload(event);
       console.log(image);
-      this.imageUrl = this.imageUrl.concat(image)
+      this.imageUrl = this.imageUrl.concat(image);
       console.log(this.imageUrl);
     }
     catch (error) {
@@ -116,7 +116,7 @@ export class FormControlComponent implements OnInit, OnDestroy {
     }
   }
   deletePost(postId: any) {
-    this.service.DeleteUser(postId)
+    this.service.DeleteUser(postId);
   }
   onsetDoc(postId: any) {
     this.service.setUser(postId);
@@ -147,9 +147,8 @@ export class FormControlComponent implements OnInit, OnDestroy {
   }
   canexit(){
     if(this.myForm){
-      console.log(this.myForm);
-      
-      return confirm('Are You sure to close the form-component ')
+      console.log(this.myForm.value);
+      return confirm('Are You sure to close the form-component');
     }
     else{
       return true;

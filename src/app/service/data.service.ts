@@ -82,7 +82,7 @@ export class DataService {
     return [];
   }
 
-  //using where to get data in firestore collection
+  //using where to filtering data in firestore collection
   getApp() {
     const itemCollection = collection(this.fire, 'post');
     console.log(itemCollection);
