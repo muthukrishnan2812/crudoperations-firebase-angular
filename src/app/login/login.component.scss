@@ -8,8 +8,14 @@ img{
 }
 .background{
     // background-color: #1e7909;
-    margin: 15% 10% 0 25%;
     background-image: radial-gradient(circle 248px at center, #16d9e3 0%, #30c7ec 47%, #46aef7 100%);
     width: 320px;
     padding: 10px;
+}
+.form-background{
+    width: 50%;
+    margin: auto;
+    margin-top: 10%;
+    border: 2px solid black;
+    padding: 40px;
 }

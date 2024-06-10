@@ -103,7 +103,7 @@ export class DataService {
 
   //getDoc -> retreive from  documents from a collection...
   async ReadData(postId:string) {
-    const userData =await doc(this.fire,'post',postId);
+    const userData = doc(this.fire,'post',postId);
     const getdocs = await getDoc(userData)
     if(getdocs.exists()){
       console.log(getdocs.id,getdocs.data());

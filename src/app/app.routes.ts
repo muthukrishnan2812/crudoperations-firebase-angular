@@ -9,6 +9,7 @@ import { LoginComponent } from './login/login.component';
 import { deactivateGuard } from './guard/deactivate.guard';
 import { matchGuard } from './guard/math.guard';
 import { UserFormComponent } from './user-form/user-form.component';
+import { RegisterComponent } from './register/register.component';
 
 export const routes: Routes = [
     {
@@ -36,7 +37,9 @@ export const routes: Routes = [
     {
         path:'user',
         component:UserFormComponent,
-        canMatch:[matchGuard]
+        canActivate:[authGuard],
+        canMatch:[matchGuard],
+        canDeactivate:[deactivateGuard]
     },
     {
         path: 'pipe',
@@ -49,6 +52,10 @@ export const routes: Routes = [
     {
         path: 'login',
         component: LoginComponent
+    },
+    {
+        path:'register',
+        component:RegisterComponent
     },
     {
         path: '**',

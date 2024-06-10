@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
-import { Auth, signInWithPopup, GoogleAuthProvider, signOut } from '@angular/fire/auth';
-import { AngularFireAuth } from '@angular/fire/compat/auth';
+import { Auth, signInWithPopup, GoogleAuthProvider, signOut, signInWithEmailAndPassword, EmailAuthProvider, signInWithPhoneNumber, PhoneAuthProvider } from '@angular/fire/auth';
 import { Router } from '@angular/router';
+import { createUserWithEmailAndPassword,RecaptchaVerifier } from '@angular/fire/auth';
 import { error } from 'console';
-
+import { firebaseApp$ } from '@angular/fire/app';
+import firebase from 'firebase/app'
 @Injectable({
   providedIn: 'root'
 })
@@ -15,5 +16,11 @@ export class AuthService {
   }
   logout() {
     return signOut(this.auth)
+  }
+  registerUser(email: string, password: string) {
+    return createUserWithEmailAndPassword(this.auth, email, password)
+  }
+  loginUser(email: string, password: string) {
+    return signInWithEmailAndPassword(this.auth, email, password)
   }
 }

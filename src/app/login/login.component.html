@@ -1,9 +1,18 @@
 <!-- <div class="container">
   <img src="../../assets/google.png" alt="">
 </div> -->
-<div class="background">
-  <div class="d-flex" (click)="isAuthenticate()">
-    <img src="../../assets/google.png" alt="">
-    <p class="my-3 mx-1">Google Authenticatiated Login</p>
+<div class="form-background my-3">
+  <form action="" (submit)="loginUser()" [formGroup]="myFrom">
+    <label for="">Email</label>
+    <input type="text" formControlName="email" class="form-control">
+    <label for="">Password</label>
+    <input type="text" formControlName="password" class="form-control">
+    <button class="btn btn-primary my-3">Submit</button>
+  </form>
+  <div class="background">
+    <div class="d-flex" (click)="isAuthenticate()">
+      <img src="../../assets/google.png" alt="">
+      <p class="my-3 mx-1">Google Authenticatiated Login</p>
+    </div>
   </div>
 </div>
