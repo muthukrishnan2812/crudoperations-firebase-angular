@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { Auth, signInWithPopup, GoogleAuthProvider, signOut, signInWithEmailAndPassword, EmailAuthProvider, signInWithPhoneNumber, PhoneAuthProvider } from '@angular/fire/auth';
 import { Router } from '@angular/router';
 import { createUserWithEmailAndPassword,RecaptchaVerifier } from '@angular/fire/auth';
-import { error } from 'console';
 import { firebaseApp$ } from '@angular/fire/app';
 import firebase from 'firebase/app'
 @Injectable({

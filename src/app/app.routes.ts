@@ -25,21 +25,21 @@ export const routes: Routes = [
     {
         path: '',
         redirectTo: "login", pathMatch: "full",
-        canMatch:[matchGuard]
+        canMatch: [matchGuard]
     },
     {
         path: 'form',
         component: FormControlComponent,
         canActivate: [authGuard],
         canDeactivate: [deactivateGuard],
-        canMatch:[matchGuard]
+        canMatch: [matchGuard]
     },
     {
-        path:'user',
-        component:UserFormComponent,
-        canActivate:[authGuard],
-        canMatch:[matchGuard],
-        canDeactivate:[deactivateGuard]
+        path: 'user',
+        component: UserFormComponent,
+        canActivate: [authGuard],
+        canMatch: [matchGuard],
+        canDeactivate: [deactivateGuard]
     },
     {
         path: 'pipe',
@@ -54,8 +54,8 @@ export const routes: Routes = [
         component: LoginComponent
     },
     {
-        path:'register',
-        component:RegisterComponent
+        path: 'register',
+        component: RegisterComponent
     },
     {
         path: '**',
