@@ -26,7 +26,7 @@ export class RegisterComponent {
     this.authService.registerUser(email,password)
     .then(()=>{
       alert('user register successfully')
-      this.router.navigate(['/user']);
+      this.router.navigate(['']);
     })
   }
 }

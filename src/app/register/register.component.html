@@ -1,7 +1,10 @@
-<form action="" (submit)="onRegister()" [formGroup]="myForm">
-    <label for="">Email</label>
-    <input type="text" class="form-control" formControlName="email">
-    <label for="">Password</label>
-    <input type="text" class="form-control" formControlName="password">
-    <button class="btn btn-primary">Submit</button>
-</form>
+<div class="form">
+    <form action="" (submit)="onRegister()" [formGroup]="myForm">
+        <label for="">Email</label>
+        <input type="text" class="form-control my-3" formControlName="email">
+        <label for="">Password</label>
+        <input type="text" class="form-control my-3" formControlName="password">
+        <button class="btn btn-primary my-3">Submit</button>
+    </form>
+    <div><span>already have an account <a routerLink="/">signIn</a></span></div>
+</div>

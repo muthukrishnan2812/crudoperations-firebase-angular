@@ -1,0 +1,12 @@
+.form{
+    width: 30%;
+    margin: auto;
+    margin-top: 10%;
+    border: 2px solid black;
+    padding: 40px;
+}
+@media (max-width:500px) {
+    .form{
+        width: fit-content;
+    }
+}
